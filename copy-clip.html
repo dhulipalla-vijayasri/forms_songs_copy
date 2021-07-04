@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title of the document</title>
+</head>
+
+<body>
+    <p>
+        <button id="copyTextBtn">Copy Textarea</button>
+        <textarea id="copytextarea"><div>
+            <h2 class="statusheading">Latest English quotes</h2>
+            <div id="englishquotes">
+                <div class="latestquotes">
+        
+                    <p>
+                    <div id=p1>life os good when hou have books</div>
+                    </p>
+                    <button class="copyButton btn" onclick="copyToClipboard('p1')">Copy</button>
+        
+                </div>
+        
+        
+        
+                <div class="latestquotes">
+        
+                    <p>
+                    <div id=p2>Google is a open source library</div>
+                    </p>
+                    <button class="copyButton btn" onclick="copyToClipboard('p2')">Copy</button>
+        
+                </div>
+        
+        
+        
+                <div class="latestquotes">
+        
+                    <p>
+                    <div id=p3>Cat is better than dog</div>
+                    </p>
+                    <button class="copyButton btn" onclick="copyToClipboard('p3')">Copy</button>
+        
+                </div>
+            </div>
+        </div></textarea>
+    </p>
+    <script>
+        copyTextBtn = document.querySelector('#copyTextBtn');
+        copyTextBtn.addEventListener('click', function (event) {
+            let copyTextarea = document.querySelector('#copytextarea');
+            copyTextarea.focus();
+            copyTextarea.select();
+            try {
+                let successful = document.execCommand('copy');
+                let msg = successful ? 'successful' : 'unsuccessful';
+                alert('Copy text command was ' + msg);
+            } catch (err) {
+                alert('Unable to copy');
+            }
+        });
+    </script>
+</body>
+
+</html>

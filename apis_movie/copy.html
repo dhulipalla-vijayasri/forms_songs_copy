@@ -1,0 +1,59 @@
+<div>
+    <h2 class="statusheading">Latest English quotes</h2>
+    <div id="englishquotes">
+        <div class="latestquotes">
+
+            <p>
+            <div id=p1>life os good when hou have books</div>
+            </p>
+            <button class="copyButton btn" onclick="copyToClipboard('p1')">Copy</button>
+
+        </div>
+
+
+
+        <div class="latestquotes">
+
+            <p>
+            <div id=p2>Google is a open source library</div>
+            </p>
+            <button class="copyButton btn" onclick="copyToClipboard('p2')">Copy</button>
+
+        </div>
+
+
+
+        <div class="latestquotes">
+
+            <p>
+            <div id=p3>Cat is better than dog</div>
+            </p>
+            <button class="copyButton btn" onclick="copyToClipboard('p3')">Copy</button>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    function copyToClipboard(var1) {
+        let val = document.getElementById(var1).innerHTML;
+        const selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = val;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
+        alert('text copied to clipboard, please use Ctrl-V to paste the data');
+
+    }
+
+
+</script>

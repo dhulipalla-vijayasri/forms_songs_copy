@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>copy codepen</title>
+    <script>
+        //code for https://spdevuk.com/blogs/how-to-add-a-copy-button-to-markdown-code-using-javascript
+
+        const copyToClipboard = str => {
+            const el = document.createElement('textarea'); // Create a <textarea> element
+            el.value = str; // Set its value to the string that you want copied
+            el.setAttribute('readonly', ''); // Make it readonly to be tamper-proof
+            el.style.position = 'absolute';
+            el.style.left = '-9999px'; // Move outside the screen to make it invisible
+            document.body.appendChild(el); // Append the <textarea> element to the HTML document
+            const selected =
+                document.getSelection().rangeCount > 0 // Check if there is any content selected previously
+                    ? document.getSelection().getRangeAt(0) // Store selection if found
+                    : false; // Mark as false to know no selection existed before
+            el.select(); // Select the <textarea> content
+            document.execCommand('copy'); // Copy - only works as a result of a user action (e.g. click events)
+            document.body.removeChild(el); // Remove the <textarea> element
+            if (selected) {
+                // If a selection existed before copying
+                document.getSelection().removeAllRanges(); // Unselect everything on the HTML document
+                document.getSelection().addRange(selected); // Restore the original selection
+            }
+        };
+
+        function handleCopyClick(evt) {
+            // get the children of the parent element
+            const { children } = evt.target.parentElement;
+            // grab the first element (we append the copy button on afterwards, so the first will be the code element)
+            // destructure the innerText from the code block
+            const { innerText } = Array.from(children)[0];
+
+            // copy all of the code to the clipboard
+            copyToClipboard(innerText);
+            // alert to show it worked, but you can put any kind of tooltip/popup
+            alert(innerText);
+        }
+
+        // get the list of all highlight code blocks
+        const highlights = document.querySelectorAll('div.highlight');
+        // add the copy button to each code block
+        highlights.forEach(div => {
+            // create the copy button
+            const copy = document.createElement('button');
+            copy.innerHTML = 'Copy';
+            // add the event listener to each click
+            copy.addEventListener('click', handleCopyClick);
+            // append the copy button to each code block
+            div.append(copy);
+        });
+
+    </script>
+    <style>
+        div.highlight button {
+            color: #adb5bd;
+            box-sizing: border-box;
+            transition: 0.2s ease-out;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0);
+            padding: 5px 10px;
+            font-size: 0.8em;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 0 0.15rem;
+        }
+
+        .centered {
+            display: flex;
+            justify-content: center;
+        }
+
+
+        /*  these styles below can be ignored, just used to make it look slightly prettier */
+
+        body {
+            background: #222;
+            font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        div.highlight {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            border-radius: 0.2rem;
+            padding: 10px;
+            margin: 1.5rem 0;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            box-sizing: border-box;
+        }
+
+        .highlight pre {
+            background: #282c34;
+        }
+
+        pre.highlight {
+            margin: 0;
+        }
+
+        .highlight,
+        pre.highlight {
+            background: #282c34;
+            color: #abb2bf;
+        }
+
+        /* atom one dark css for code blocks */
+
+        .highlight,
+        pre.highlight {
+            background: #282c34;
+            color: #abb2bf;
+        }
+
+        .highlight pre {
+            background: #282c34;
+        }
+
+        .highlight .hll {
+            background: #282c34;
+        }
+
+        .highlight .c {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .highlight .err {
+            color: #960050;
+            background-color: #1e0010;
+        }
+
+        .highlight .k {
+            color: #c678dd;
+        }
+
+        .highlight .l {
+            color: #98c379;
+        }
+
+        .highlight .n {
+            color: #abb2bf;
+        }
+
+        .highlight .o {
+            color: #abb2bf;
+        }
+
+        .highlight .p {
+            color: #abb2bf;
+        }
+
+        .highlight .cm {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .highlight .cp {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .highlight .c1 {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .highlight .cs {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .highlight .ge {
+            font-style: italic;
+        }
+
+        .highlight .gs {
+            font-weight: 700;
+        }
+
+        .highlight .kc {
+            color: #c678dd;
+        }
+
+        .highlight .kd {
+            color: #c678dd;
+        }
+
+        .highlight .kn {
+            color: #c678dd;
+        }
+
+        .highlight .kp {
+            color: #c678dd;
+        }
+
+        .highlight .kr {
+            color: #c678dd;
+        }
+
+        .highlight .kt {
+            color: #c678dd;
+        }
+
+        .highlight .ld {
+            color: #98c379;
+        }
+
+        .highlight .m {
+            color: #d19a66;
+        }
+
+        .highlight .s {
+            color: #98c379;
+        }
+
+        .highlight .na {
+            color: #d19a66;
+        }
+
+        .highlight .nb {
+            color: #e5c07b;
+        }
+
+        .highlight .nc {
+            color: #e5c07b;
+        }
+
+        .highlight .no {
+            color: #e5c07b;
+        }
+
+        .highlight .nd {
+            color: #e5c07b;
+        }
+
+        .highlight .ni {
+            color: #e5c07b;
+        }
+
+        .highlight .ne {
+            color: #e5c07b;
+        }
+
+        .highlight .nf {
+            color: #abb2bf;
+        }
+
+        .highlight .nl {
+            color: #e5c07b;
+        }
+
+        .highlight .nn {
+            color: #abb2bf;
+        }
+
+        .highlight .nx {
+            color: #abb2bf;
+        }
+
+        .highlight .py {
+            color: #e5c07b;
+        }
+
+        .highlight .nt {
+            color: #e06c75;
+        }
+
+        .highlight .nv {
+            color: #e5c07b;
+        }
+
+        .highlight .ow {
+            font-weight: 700;
+        }
+
+        .highlight .w {
+            color: #f8f8f2;
+        }
+
+        .highlight .mf {
+            color: #d19a66;
+        }
+
+        .highlight .mh {
+            color: #d19a66;
+        }
+
+        .highlight .mi {
+            color: #d19a66;
+        }
+
+        .highlight .mo {
+            color: #d19a66;
+        }
+
+        .highlight .sb {
+            color: #98c379;
+        }
+
+        .highlight .sc {
+            color: #98c379;
+        }
+
+        .highlight .sd {
+            color: #98c379;
+        }
+
+        .highlight .s2 {
+            color: #98c379;
+        }
+
+        .highlight .se {
+            color: #98c379;
+        }
+
+        .highlight .sh {
+            color: #98c379;
+        }
+
+        .highlight .si {
+            color: #98c379;
+        }
+
+        .highlight .sx {
+            color: #98c379;
+        }
+
+        .highlight .sr {
+            color: #56b6c2;
+        }
+
+        .highlight .s1 {
+            color: #98c379;
+        }
+
+        .highlight .ss {
+            color: #56b6c2;
+        }
+
+        .highlight .bp {
+            color: #e5c07b;
+        }
+
+        .highlight .vc {
+            color: #e5c07b;
+        }
+
+        .highlight .vg {
+            color: #e5c07b;
+        }
+
+        .highlight .vi {
+            color: #e06c75;
+        }
+
+        .highlight .il {
+            color: #d19a66;
+        }
+
+        .highlight .gu {
+            color: #75715e;
+        }
+
+        .highlight .gd {
+            color: #f92672;
+        }
+
+        .highlight .gi {
+            color: #a6e22e;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- poorly formatted, but you get the idea -->
+    <div class="centered">
+        <div class="highlight">
+            <pre class="highlight javascript"><code><span class="kd">function</span> <span class="nx">helloWorld</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"hello, world!"</span><span class="p">)</span>
+  <span class="p">}</span></code></pre>
+        </div>
+    </div>
+
+</body>
+
+</html>
