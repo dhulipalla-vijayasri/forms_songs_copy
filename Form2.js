@@ -1,6 +1,6 @@
 /* Form Handlings  */
 
-function form_validations() {
+function form_validationss() {
 
     //Target_Inputs
     var unameDOM = document.getElementById('uname')
